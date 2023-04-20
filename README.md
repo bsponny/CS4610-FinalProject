@@ -1,4 +1,5 @@
 # CS 4610 Final Project
+Our [project plan](./plan.md) can be found here
 
 ## Get Started
 ### Install the dependencies
