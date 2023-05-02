@@ -8,8 +8,32 @@ body{
 
 .container {
   display: flex;
-  height: 100vh; /* Make the container fill the viewport height */
+  height: 95vh; /* Make the container fill the viewport height */
 }
+/* SCROLL BAR? */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  width: 10px;
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  max-width: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  width: 4px;
+  background: #555; 
+}
+
 
 .book {
   display: flex;
@@ -28,6 +52,7 @@ body{
   border-width: 4px;
   border-color: aqua;
   border-style: solid;
+  overflow-y:auto;
 }
 
 .left {
@@ -53,4 +78,15 @@ body{
   border-width: 15px;
   border-radius: 20px;
   border-style:double;
+}
+
+.headerbar {
+  display: flex;
+  justify-content:space-between;
+  background-color: tan;
+  height: 5vh;
+}
+
+.recipe-text {
+  text-align: left;
 }
