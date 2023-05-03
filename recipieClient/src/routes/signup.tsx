@@ -1,14 +1,35 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { auth, db } from '../lib/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore';
 
 export function Signup() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
-    // handle form submission
+    if (password === confirmPassword){
+        try {
+            const { user } = await createUserWithEmailAndPassword(auth, email, password);
+            const userRef = collection(db, "users");
+            await addDoc(userRef, {
+                username, 
+                email,
+                uid: user.uid
+            });
+            console.log("success!");
+        }
+        catch(error: any){
+            setError(error.message);
+        }
+    }
+    else {
+        setError("Passwords Don't Match")
+    }
   };
 
   return (
@@ -55,6 +76,7 @@ export function Signup() {
                     required
                 />
             </div>
+            {error && <p className="error">{error}</p>}
             <button type="submit">Sign Up</button>
         </form>
     </div>

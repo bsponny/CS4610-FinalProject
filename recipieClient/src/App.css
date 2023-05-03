@@ -145,9 +145,14 @@ a:not(.logtosign) {
 .sign-log div:not(.logtosign){
   display: flex;
   justify-content: left;
+  align-items: center;
   width: 90%
 }
 
 div .logtosign{
   margin: 10px
+}
+
+.error {
+  color: red;
 }

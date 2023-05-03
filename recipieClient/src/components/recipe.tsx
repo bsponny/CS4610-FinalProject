@@ -47,7 +47,7 @@ export const Recipe: React.FC<RecipeProps> = ({
         ))}
       </ul>
       <div style= {{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <textarea placeholder='have an experience with this recipe? Leav a comment!' cols={30} rows={4}></textarea>
+        <textarea placeholder='Have an experience with this recipe? Leave a comment!' cols={30} rows={4}></textarea>
         <button>post</button>
       </div>
     </div>
