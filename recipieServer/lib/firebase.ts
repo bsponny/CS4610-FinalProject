@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import * as admin from "firebase-admin";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -9,6 +11,7 @@ import { getAuth } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyAy45uOxg6S7f5MGXnGeTwo9ZgzNsshZ08",
   authDomain: "recipie-dev.firebaseapp.com",
+  credential: admin.credential.applicationDefault(),
   projectId: "recipie-dev",
   storageBucket: "recipie-dev.appspot.com",
   messagingSenderId: "65605346184",
@@ -19,3 +22,5 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+admin.initializeApp(firebaseConfig);
+export const db = admin.firestore();
