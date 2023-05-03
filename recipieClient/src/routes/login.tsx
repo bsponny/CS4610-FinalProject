@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { signInWithEmailAndPassword, User } from 'firebase/auth';
+import { auth } from "../lib/firebase";
+import { redirect } from 'react-router-dom';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-
-  const handleLogin = (e:any) => {
+  const handleLogin = async (e:any) => {
     e.preventDefault();
-    // handle form submission
+    try {
+        const { user } = await signInWithEmailAndPassword(auth, email, password)
+        redirect("#/cookbook");
+    }
+    catch (error: any){
+        setError(error.message);
+    }
   };
 
   return (
@@ -34,9 +43,10 @@ export const Login = () => {
                     required
                 />
             </div>
+            {error && <p className="error">{error}</p>}
             <div className='logtosign'>
-                <button type="submit">Sign Up</button>
-                <a className='logtosign' href="/signup">I don't have an account</a>
+                <button type="submit">Login</button>
+                <a className='logtosign' href="#/signup">I don't have an account</a>
             </div>
         </form>
     </div>
