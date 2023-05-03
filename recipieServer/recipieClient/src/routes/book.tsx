@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import '../App.css';
-import { Recipe } from '../components/recipe';
+import { Recipe , RecipeProps} from '../components/recipe';
 
 export const Book = () => {
+  
   const [currentPage, setCurrentPage] = useState(0);
+  const [recipe1, setrecipe1] = useState<RecipeProps>();
+  const [recipe2, setrecipe2] = useState<RecipeProps>();
 
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
@@ -24,6 +27,7 @@ export const Book = () => {
             directions = {['Cook spaghetti according to package instructions', 'Mix beef, bread crumbs, garlic, and salt and pepper', 'Form into meatballs and cook in a pan', 'Serve meatballs on top of spaghetti']}
             comments = {['This recipe is amazing!', 'I added some Parmesan cheese and it was even better','Oh definitely Parmesan a must have!','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh']}
           />
+
         </div>
         <div className="right">
           RIGHT!

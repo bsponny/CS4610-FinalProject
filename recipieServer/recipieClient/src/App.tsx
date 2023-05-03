@@ -3,9 +3,10 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { Add } from './routes/addrecipe'
-import { createBrowserRouter, createHashRouter, RouterProvider, Link, Outlet, HashRouter} from 'react-router-dom';
+import { createHashRouter, RouterProvider, Outlet} from 'react-router-dom';
 import { Book } from './routes/book'; 
-
+import { Signup } from './routes/signup';
+import { Login } from './routes/login';
 const Root = () => {
   return(
     <div className='book' style={{justifyContent: 'center'}}><h1>Sign up or Log in to get to your recipes</h1></div>
@@ -29,6 +30,14 @@ const router = createHashRouter([
         path: "/add",
         element: <Add/>
       },
+      {
+        path: "/signup",
+        element: <Signup/>
+      },
+      {
+        path: "/login",
+        element: <Login/>
+      },
     ],
   },
 ]);
@@ -37,9 +46,7 @@ export const App = () => {
   return (
     <>
       <div className='headerbar'>
-        <a href='/'>
-          <h1 style={{ marginLeft: '10px'}}>Let's Cook!</h1>
-        </a>
+        <h1 style={{ marginLeft: '10px'}}>Let's Cook!</h1>
         <div className='headerbar'>
           <a href="#/cookbook">Cookbook</a>
           <a href='#/add'>add recipe</a>

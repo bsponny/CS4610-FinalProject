@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 
-interface RecipeProps {
+export interface RecipeProps {
   title: string;
   chefName: string;
   servingSize: number;

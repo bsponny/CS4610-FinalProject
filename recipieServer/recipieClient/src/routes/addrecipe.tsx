@@ -54,6 +54,7 @@ export const Add = () => {
     return (
         <div className= 'book'>
             <div className='add-recipe'>
+                <h1>Add a Recipe!!!</h1>
                 <form onSubmit={handleSubmit}>
                 <label htmlFor="recipe-name">Recipe Name:</label>
                 <input
@@ -110,7 +111,7 @@ export const Add = () => {
                 <label htmlFor="directions-list"><h3>Directions List:</h3></label>
                 {directionsList.map((direction, index) => (
                     <div key={index}>
-                    <input
+                    <input className='directions'
                         type="text"
                         name={`direction-${index}`}
                         value={direction}
