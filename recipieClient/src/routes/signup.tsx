@@ -21,7 +21,6 @@ export function Signup() {
                 email,
                 uid: user.uid
             });
-            console.log("success!");
         }
         catch(error: any){
             setError(error.message);

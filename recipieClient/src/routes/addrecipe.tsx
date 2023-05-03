@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
+import {auth, db} from "../lib/firebase";
+import { collection, addDoc } from 'firebase/firestore';
+import { User, onAuthStateChanged } from "firebase/auth";
 
 
 export const Add = () => {
@@ -9,15 +12,40 @@ export const Add = () => {
     const [numServings, setNumServings] = useState(1);
     const [ingredientList, setIngredientList] = useState(['']);
     const [directionsList, setDirectionsList] = useState(['']);
+    const [user, setUser] = useState<User | null>(null);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const loggedIn = onAuthStateChanged(auth, (user) => {
+          setUser(user);
+        });
+        return loggedIn;
+      }, [auth]);
     
-    const handleSubmit = (event :any) => {
+    const handleSubmit = async (event :any) => {
         event.preventDefault();
-        // handle form submission here
-        console.log('Recipe name:', recipeName);
-        console.log('Chef name:', chefName);
-        console.log('Number of servings:', numServings);
-        console.log('Ingredient list:', ingredientList);
-        console.log('Directions list:', directionsList);
+        if (user){
+            try {
+                const recipeRef = collection(db, "recipes");
+                await addDoc(recipeRef, {
+                    recipeName,
+                    chefName,
+                    numServings,
+                    ingredientList,
+                    directionsList,
+                    comments: [],
+                    userId: user.uid
+                });
+                setRecipeName("");
+                setChefName("");
+                setNumServings(1);
+                setIngredientList([""]);
+                setDirectionsList([""]);
+            }
+            catch(error: any){
+                setError(error.message);
+            }
+        }
     }
     
     const handleAddIngredient = () => {
@@ -129,6 +157,7 @@ export const Add = () => {
                     </div>
                 ))}
                 <br />
+                {error && <p className='error'>{error}</p>}
                 <input type="submit" value="Submit" />
                 </form>
             </div>

@@ -19,18 +19,30 @@ export const Book = () => {
   return (
     <div className='book'>
         <div className="left">
+          <button onClick={handlePrevPage} className='prevPage'>Previous Page</button>
           <Recipe 
             title = {'Spaghetti and Meatballs'}
             chefName = {'Giada De Laurentiis'}
             servingSize = {4}
             ingredients = {['1 pound spaghetti', '1 pound ground beef', '1 cup bread crumbs', '2 cloves garlic, minced']}
             directions = {['Cook spaghetti according to package instructions', 'Mix beef, bread crumbs, garlic, and salt and pepper', 'Form into meatballs and cook in a pan', 'Serve meatballs on top of spaghetti']}
-            comments = {['This recipe is amazing!', 'I added some Parmesan cheese and it was even better','Oh definitely Parmesan a must have!','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh','lorem ipsum bruh']}
+            comments = {[
+              {id: 0, comment:'This recipe is amazing!'}, 
+            ]}
           />
-
         </div>
         <div className="right">
-          RIGHT!
+          <button onClick={handleNextPage}>Next Page</button>
+          <Recipe
+            title = {'Spaghetti and Meatballs'}
+            chefName = {'Giada De Laurentiis'}
+            servingSize = {4}
+            ingredients = {['1 pound spaghetti', '1 pound ground beef', '1 cup bread crumbs', '2 cloves garlic, minced']}
+            directions = {['Cook spaghetti according to package instructions', 'Mix beef, bread crumbs, garlic, and salt and pepper', 'Form into meatballs and cook in a pan', 'Serve meatballs on top of spaghetti']}
+            comments = {[
+              {id: 0, comment:'This recipe is amazing!'}, 
+            ]}
+          />
         </div>
     </div>
   );

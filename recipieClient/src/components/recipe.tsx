@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import '../App.css';
 
+export interface Comment {
+  id: number,
+  comment: string
+}
+
 export interface RecipeProps {
   title: string;
   chefName: string;
   servingSize: number;
   ingredients: string[];
   directions: string[];
-  comments: string[];
+  comments: Comment[];
 }
 
 export const Recipe: React.FC<RecipeProps> = ({
@@ -23,7 +28,7 @@ export const Recipe: React.FC<RecipeProps> = ({
   const [inputComment, setInputComment] = useState('');
 
   return (
-    <div>
+    <div className='recipe'>
       <h1>{title}</h1>
       <p className='recipe-text'>Chef: {chefName}</p>
       <p className='recipe-text'>Serving Size: {servingSize}</p>
@@ -42,8 +47,8 @@ export const Recipe: React.FC<RecipeProps> = ({
       <hr />
       <h2 >Comments</h2>
       <ul className='recipe-text'>
-        {comments.map((comment) => (
-          <li key={comment}>{comment}</li>
+        {comments.map((comments) => (
+          <li key={comments.id}>{comments.comment}</li>
         ))}
       </ul>
       <div style= {{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

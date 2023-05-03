@@ -64,16 +64,22 @@ body{
 }
 
 .left {
+  display: flex;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   border-right-width: 2px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-flow: column;
 }
 
 .right {
-
+  display: flex;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   border-left-width: 2px;
+  align-items: flex-end;
+  flex-flow: column;
 }
 
 .sidebar {
@@ -102,6 +108,10 @@ a:not(.logtosign) {
   padding: 5px;
   border-style: solid;
   border-radius: 10px;
+}
+
+.recipe{
+  width: 100%;
 }
 
 .recipe-text {
