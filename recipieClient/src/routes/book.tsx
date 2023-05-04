@@ -14,12 +14,7 @@ export const Book = () => {
     comments: [],
     userId: '' 
   }
-
-  const [currentPage, setCurrentPage] = useState(0);
-  const [recipeList, setRecipeList] = useState<RecipeProps[]>([]);
-  const [recipe1, setRecipe1] = useState<RecipeProps>(blank);
-  const [recipe2, setRecipe2] = useState<RecipeProps>(blank);
-
+  
   useEffect(() => {
     const fetchRecipes = async () => {
       const recipesRef = collection(db, "recipes");
@@ -32,12 +27,29 @@ export const Book = () => {
     fetchRecipes();
   }, []);
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const [recipeList, setRecipeList] = useState<RecipeProps[]>([]);
+  const [recipe1, setRecipe1] = useState<RecipeProps>(blank);
+  const [recipe2, setRecipe2] = useState<RecipeProps>(blank);
+
+
+  useEffect(() => {
+    if (currentPage + 1 > recipeList.length){
+      setRecipe1(recipeList[currentPage]);
+      setRecipe2(blank);
+    }
+    else {
+      setRecipe1(recipeList[currentPage]);
+      setRecipe2(recipeList[currentPage + 1]);
+    }
+  }, [currentPage])
+
   const handlePrevPage = () => {
-    setCurrentPage(currentPage - 1);
+    setCurrentPage(currentPage - 2);
   };
 
   const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
+    setCurrentPage(currentPage + 2);
   };
 
   return (
@@ -49,7 +61,7 @@ export const Book = () => {
           <Recipe {...recipe1}/>
         </div>
         <div className="right">
-          {currentPage < recipeList.length - 1 && (
+          {currentPage < recipeList.length - 2 && (
             <button onClick={handleNextPage}>Next Page</button>
           )}
           <Recipe {...recipe2}/>
