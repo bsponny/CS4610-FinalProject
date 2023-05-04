@@ -23,13 +23,15 @@ export const Book = () => {
     const user = auth.currentUser;
 
     const fetchRecipes = async () => {
-      const recipesRef = collection(db, "recipes");
-      const q = query(recipesRef, where("userId", "==", user?.uid));
-      const snapshot = await getDocs(q);
-      const recipes = snapshot.docs.map(doc => doc.data() as RecipeProps);
-      setRecipeList(recipes);
-      setRecipe1(recipes[0]);
-      setRecipe2(recipes[1]);
+      if (user !== null) {
+        const recipesRef = collection(db, "recipes");
+        const q = query(recipesRef, where("userId", "==", user.uid));
+        const snapshot = await getDocs(q);
+        const recipes = snapshot.docs.map(doc => doc.data() as RecipeProps);
+        setRecipeList(recipes);
+        setRecipe1(recipes[0]);
+        setRecipe2(recipes[1]);
+      }
     };
     fetchRecipes();
   }, []);

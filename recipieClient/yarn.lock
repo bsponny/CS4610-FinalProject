@@ -853,6 +853,11 @@
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.3.tgz"
   integrity sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==
 
+"@types/uuid@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-9.0.1.tgz#98586dc36aee8dacc98cc396dbca8d0429647aa6"
+  integrity sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA==
+
 "@vitejs/plugin-react@^3.1.0":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@vitejs/plugin-react/-/plugin-react-3.1.0.tgz"
@@ -1023,7 +1028,7 @@ faye-websocket@0.11.4:
 
 firebase@^9.21.0:
   version "9.21.0"
-  resolved "https://registry.npmjs.org/firebase/-/firebase-9.21.0.tgz"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-9.21.0.tgz#232f6a89f1bd21d28df1ab72a05c010d204be908"
   integrity sha512-kQpT+YjusVhqj8feSmb+9Fpmyfy7ayGSd6GVk2k0qJjt+AwYgHZ9tuHuIgFdEHGsvqxYRZJpu067ck9ZQwbqQw==
   dependencies:
     "@firebase/analytics" "0.10.0"
@@ -1379,6 +1384,11 @@ update-browserslist-db@^1.0.10:
   dependencies:
     escalade "^3.1.1"
     picocolors "^1.0.0"
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 vite@^4.2.0:
   version "4.2.2"
