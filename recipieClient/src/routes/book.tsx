@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { Recipe , RecipeProps} from '../components/recipe';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, where ,query } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { getAuth } from "firebase/auth";
 
 export const Book = () => {
   const blank = {
@@ -15,10 +16,16 @@ export const Book = () => {
     userId: '' 
   }
   
+
+  
   useEffect(() => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
     const fetchRecipes = async () => {
       const recipesRef = collection(db, "recipes");
-      const snapshot = await getDocs(recipesRef);
+      const q = query(recipesRef, where("userId", "==", user?.uid));
+      const snapshot = await getDocs(q);
       const recipes = snapshot.docs.map(doc => doc.data() as RecipeProps);
       setRecipeList(recipes);
       setRecipe1(recipes[0]);
