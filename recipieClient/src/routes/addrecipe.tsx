@@ -4,6 +4,7 @@ import {auth, db} from "../lib/firebase";
 import { collection, addDoc } from 'firebase/firestore';
 import { User, onAuthStateChanged } from "firebase/auth";
 import { Recipe } from '../components/recipe';
+import { v4 as uuidv4 } from "uuid";
 
 
 export const Add = () => {
@@ -25,9 +26,12 @@ export const Add = () => {
     
     const handleSubmit = async (event :any) => {
         event.preventDefault();
+        const recipeId = uuidv4();
+        const recipeRef = collection(db, "recipes");
         if (user){
             try {
                 const newRecipe = {
+                    id: recipeId,
                     recipeName,
                     chefName,
                     servingSize: numServings,
@@ -37,7 +41,6 @@ export const Add = () => {
                     userId: user.uid
                 };
 
-                const recipeRef = collection(db, "recipes");
                 await addDoc(recipeRef, newRecipe);
                 setRecipeName("");
                 setChefName("");
