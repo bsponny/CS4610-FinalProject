@@ -44,8 +44,14 @@ export const App = () => {
     const loggedIn = onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
+    if(user === null){
+      window.location.replace("#/login");
+    }
+    else {
+      window.location.replace("#/cookbook");
+    }
     return loggedIn;
-  }, [auth]);
+  }, [auth, user]);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -79,9 +85,13 @@ export const App = () => {
       </div>
       <div className='container'>
         <RouterProvider router = {router} />
-        <div className="sidebar">
-            Sidebar sad
-        </div>
+        {user ? (
+          <div className="sidebar">
+              Sidebar sad
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     </>
   )

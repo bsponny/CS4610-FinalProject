@@ -3,6 +3,7 @@ import '../App.css';
 import {auth, db} from "../lib/firebase";
 import { collection, addDoc } from 'firebase/firestore';
 import { User, onAuthStateChanged } from "firebase/auth";
+import { Recipe } from '../components/recipe';
 
 
 export const Add = () => {
@@ -26,21 +27,24 @@ export const Add = () => {
         event.preventDefault();
         if (user){
             try {
-                const recipeRef = collection(db, "recipes");
-                await addDoc(recipeRef, {
+                const newRecipe = {
                     recipeName,
                     chefName,
-                    numServings,
-                    ingredientList,
-                    directionsList,
+                    servingSize: numServings,
+                    ingredients: ingredientList,
+                    directions: directionsList,
                     comments: [],
                     userId: user.uid
-                });
+                };
+
+                const recipeRef = collection(db, "recipes");
+                await addDoc(recipeRef, newRecipe);
                 setRecipeName("");
                 setChefName("");
                 setNumServings(1);
                 setIngredientList([""]);
                 setDirectionsList([""]);
+                window.location.replace("#/cookbook");
             }
             catch(error: any){
                 setError(error.message);

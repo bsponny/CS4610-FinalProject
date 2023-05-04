@@ -160,7 +160,9 @@ a:not(.logtosign) {
 }
 
 div .logtosign{
-  margin: 10px
+  display: flex;
+  margin: 10px;
+  align-items: center;
 }
 
 .error {

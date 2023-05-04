@@ -12,6 +12,10 @@ export function Signup() {
 
   const handleSubmit = async (e:any) => {
     e.preventDefault();
+    if (email === "" || password === "" || username === "" || confirmPassword == "") {
+        setError("Fields are required");
+        return;
+    }
     if (password === confirmPassword){
         try {
             const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -29,6 +33,10 @@ export function Signup() {
     else {
         setError("Passwords Don't Match")
     }
+  };
+
+  const handleBackButton = () => {
+    window.location.replace("#/login");
   };
 
   return (
@@ -76,7 +84,10 @@ export function Signup() {
                 />
             </div>
             {error && <p className="error">{error}</p>}
-            <button type="submit">Sign Up</button>
+            <div className='logtosign'>
+                <button type="submit">Sign Up</button>
+                <button onClick={handleBackButton}>Back</button>
+            </div>
         </form>
     </div>
   );

@@ -7,47 +7,41 @@ export interface Comment {
 }
 
 export interface RecipeProps {
-  title: string;
+  recipeName: string;
   chefName: string;
   servingSize: number;
   ingredients: string[];
   directions: string[];
   comments: Comment[];
+  userId: string
 }
 
-export const Recipe: React.FC<RecipeProps> = ({
-  title,
-  chefName,
-  servingSize,
-  ingredients,
-  directions,
-  comments,
-}) => {
+export const Recipe: React.FC<RecipeProps> = (recipe) => {
   
-  const [commentList, setCommentList] = useState(comments);
+  const [commentList, setCommentList] = useState(recipe.comments);
   const [inputComment, setInputComment] = useState('');
 
   return (
     <div className='recipe'>
-      <h1>{title}</h1>
-      <p className='recipe-text'>Chef: {chefName}</p>
-      <p className='recipe-text'>Serving Size: {servingSize}</p>
+      <h1>{recipe.recipeName}</h1>
+      <p className='recipe-text'>Chef: {recipe.chefName}</p>
+      <p className='recipe-text'>Serving Size: {recipe.servingSize}</p>
       <h2>Ingredients</h2>
       <ul className='recipe-text'>
-        {ingredients.map((ingredient) => (
+        {recipe.ingredients.map((ingredient) => (
           <li key={ingredient}>{ingredient}</li>
         ))}
       </ul>
       <h2>Directions</h2>
       <ol className='recipe-text'>
-        {directions.map((direction) => (
+        {recipe.directions.map((direction) => (
           <li key={direction}>{direction}</li>
         ))}
       </ol>
       <hr />
       <h2 >Comments</h2>
       <ul className='recipe-text'>
-        {comments.map((comments) => (
+        {recipe.comments.map((comments) => (
           <li key={comments.id}>{comments.comment}</li>
         ))}
       </ul>

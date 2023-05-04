@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { signInWithEmailAndPassword, User } from 'firebase/auth';
 import { auth } from "../lib/firebase";
-import { redirect } from 'react-router-dom';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,9 +9,13 @@ export const Login = () => {
 
   const handleLogin = async (e:any) => {
     e.preventDefault();
+    if (email === "" || password === "") {
+        setError("Fields are required");
+        return;
+    }
     try {
-        const { user } = await signInWithEmailAndPassword(auth, email, password)
-        redirect("#/cookbook");
+        await signInWithEmailAndPassword(auth, email, password)
+        window.location.replace("#/cookbook");
     }
     catch (error: any){
         setError(error.message);
