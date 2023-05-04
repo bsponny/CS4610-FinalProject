@@ -5,6 +5,7 @@ import { createHashRouter, RouterProvider, Outlet} from 'react-router-dom';
 import { Book } from './routes/book'; 
 import { Signup } from './routes/signup';
 import { Login } from './routes/login';
+import { Search } from './routes/search';
 import { onAuthStateChanged, User, signOut } from 'firebase/auth';
 import { auth } from './lib/firebase';
 
@@ -33,6 +34,10 @@ const router = createHashRouter([
         path: "/login",
         element: <Login/>
       },
+      {
+        path: "/search",
+        element: <Search/>
+      }
     ],
   },
 ]);
@@ -70,6 +75,11 @@ export const App = () => {
           )}
           {user ? (
             <a href='#/add'>Add Recipe</a>
+            ) : (
+            <p></p>
+          )}
+          {user ? (
+            <a href='#/search'>Search for User</a>
             ) : (
             <p></p>
           )}
