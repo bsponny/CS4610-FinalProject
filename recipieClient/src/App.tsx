@@ -5,6 +5,7 @@ import { createHashRouter, RouterProvider, Outlet} from 'react-router-dom';
 import { Book } from './routes/book'; 
 import { Signup } from './routes/signup';
 import { Login } from './routes/login';
+import { Sidebar } from './components/sidebar';
 import { onAuthStateChanged, User, signOut } from 'firebase/auth';
 import { auth } from './lib/firebase';
 
@@ -87,7 +88,7 @@ export const App = () => {
         <RouterProvider router = {router} />
         {user ? (
           <div className="sidebar">
-              Sidebar sad
+              <Sidebar />
           </div>
         ) : (
           <div></div>

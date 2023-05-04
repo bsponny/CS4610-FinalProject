@@ -15,7 +15,6 @@ export const Book = () => {
     comments: [],
     userId: '' 
   }
-  
 
   
   useEffect(() => {

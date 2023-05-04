@@ -23,7 +23,8 @@ export function Signup() {
             await addDoc(userRef, {
                 username, 
                 email,
-                uid: user.uid
+                uid: user.uid,
+                following:[]
             });
         }
         catch(error: any){
