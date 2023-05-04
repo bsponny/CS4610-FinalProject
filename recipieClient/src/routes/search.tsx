@@ -1,6 +1,7 @@
 import { useState, useEffect, SetStateAction } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, updateDoc, arrayUnion, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from '../lib/firebase';
+import { getAuth } from "firebase/auth";
 
 interface User {
     username: string;
@@ -10,6 +11,7 @@ interface User {
 export const Search = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<User[]>([]);
+    const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
         const fetchSearchResults = async () => {
@@ -31,6 +33,18 @@ export const Search = () => {
         setSearchQuery(event.target.value);
     }
 
+    const handleFollow = async (userId: string) => {
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+
+        if (currentUser !== null){
+            const currentUserRef = doc(db, "users", currentUser.uid)
+            await updateDoc(currentUserRef, {
+                following: arrayUnion(userId)
+            });
+        }
+    };
+
     return(
         <div className="book">
             <div className="add-recipe">
@@ -47,7 +61,10 @@ export const Search = () => {
                 {searchResults.length > 0 ? (
                     <ul>
                         {searchResults.map((user) => (
-                            <li key={user.uid}>{user.username}</li>
+                            <li key={user.uid}>
+                                {user.username}
+                                <button onClick={() => handleFollow(user.uid)}>Follow</button>
+                            </li>
                         ))}
                     </ul>
                 ) : (
