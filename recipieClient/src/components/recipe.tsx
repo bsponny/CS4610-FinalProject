@@ -3,15 +3,17 @@ import '../App.css';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../lib/firebase';
 import { doc, updateDoc, arrayUnion, arrayRemove, collection, getDoc, query, where, getDocs } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 
 
 export interface Comment {
-  id: number,
+  id: string,
   comment: string,
   userId: string
 }
 
 export interface RecipeProps {
+  id: string;
   recipeName: string;
   chefName: string;
   servingSize: number;
@@ -44,14 +46,14 @@ export const Recipe: React.FC<RecipeProps> = (recipe) => {
     if(!user) {
       console.log("Tried posting a comment, but user not defined!")
     } else {
-      const _id = recipe.comments.length;
+      const _id = uuidv4();
       
       let newComment: Comment = {
         id: _id,
         comment: inputComment,
         userId: user.uid
       };
-      const q = query(collection(db, "recipes"), where("recipeName", "==", recipe.recipeName));
+      const q = query(collection(db, "recipes"), where("id", "==", recipe.id));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((docu) => {
         const newDocRef = doc(db, "recipes", docu.id);

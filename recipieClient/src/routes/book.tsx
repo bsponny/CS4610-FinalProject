@@ -13,7 +13,8 @@ export const Book = () => {
     ingredients: [],
     directions: [],
     comments: [],
-    userId: '' 
+    userId: '',
+    id: ''
   }
   
 
