@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
+import { User, onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from '../lib/firebase';
+import { doc, updateDoc, arrayUnion, arrayRemove, collection, getDoc, query, where, getDocs } from "firebase/firestore";
+
 
 export interface Comment {
   id: number,
-  comment: string
+  comment: string,
+  userId: string
 }
 
 export interface RecipeProps {
@@ -20,6 +25,46 @@ export const Recipe: React.FC<RecipeProps> = (recipe) => {
   
   const [commentList, setCommentList] = useState(recipe.comments);
   const [inputComment, setInputComment] = useState('');
+  const [user, setUser] = useState<User | null>(null);
+  
+  useEffect(() => {
+    const loggedIn = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+    return loggedIn;
+  }, [auth]);
+
+  useEffect(() => {
+    if(recipe.comments != undefined) {
+      setCommentList(recipe.comments);
+    }
+  }, [recipe]);
+
+  const postComment = async () => {
+    if(!user) {
+      console.log("Tried posting a comment, but user not defined!")
+    } else {
+      const _id = recipe.comments.length;
+      
+      let newComment: Comment = {
+        id: _id,
+        comment: inputComment,
+        userId: user.uid
+      };
+      const q = query(collection(db, "recipes"), where("recipeName", "==", recipe.recipeName));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((docu) => {
+        const newDocRef = doc(db, "recipes", docu.id);
+        updateDoc(newDocRef, {
+          comments: arrayUnion(newComment)
+        });
+        let newComments = docu.data().comments;
+        newComments.push(newComment);
+        setCommentList(newComments);
+      });
+      setInputComment("");
+  }
+  };
 
   if (recipe.recipeName === undefined){
     return(
@@ -47,13 +92,13 @@ export const Recipe: React.FC<RecipeProps> = (recipe) => {
         <hr />
         <h2 >Comments</h2>
         <ul className='recipe-text'>
-          {recipe.comments.map((comments) => (
+          {commentList.map((comments) => (
             <li key={comments.id}>{comments.comment}</li>
           ))}
         </ul>
         <div style= {{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <textarea placeholder='Have an experience with this recipe? Leave a comment!' cols={30} rows={4}></textarea>
-          <button>post</button>
+          <textarea placeholder='Have an experience with this recipe? Leave a comment!' cols={30} rows={4} value = {inputComment} onChange={e => setInputComment(e.target.value)}></textarea>
+          <button onClick={postComment}>post</button>
         </div>
       </div>
     );
