@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { Recipe , RecipeProps} from '../components/recipe';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export const Book = () => {
-  
+  const blank = {
+    recipeName: '',
+    chefName: '',
+    servingSize: 0,
+    ingredients: [],
+    directions: [],
+    comments: [],
+    userId: '' 
+  }
+
   const [currentPage, setCurrentPage] = useState(0);
-  const [recipe1, setrecipe1] = useState<RecipeProps>();
-  const [recipe2, setrecipe2] = useState<RecipeProps>();
+  const [recipeList, setRecipeList] = useState<RecipeProps[]>([]);
+  const [recipe1, setRecipe1] = useState<RecipeProps>(blank);
+  const [recipe2, setRecipe2] = useState<RecipeProps>(blank);
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      const recipesRef = collection(db, "recipes");
+      const snapshot = await getDocs(recipesRef);
+      const recipes = snapshot.docs.map(doc => doc.data() as RecipeProps);
+      setRecipeList(recipes);
+      setRecipe1(recipes[0]);
+      setRecipe2(recipes[1]);
+    };
+    fetchRecipes();
+  }, []);
 
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
@@ -19,30 +43,16 @@ export const Book = () => {
   return (
     <div className='book'>
         <div className="left">
-          <button onClick={handlePrevPage} className='prevPage'>Previous Page</button>
-          <Recipe 
-            title = {'Spaghetti and Meatballs'}
-            chefName = {'Giada De Laurentiis'}
-            servingSize = {4}
-            ingredients = {['1 pound spaghetti', '1 pound ground beef', '1 cup bread crumbs', '2 cloves garlic, minced']}
-            directions = {['Cook spaghetti according to package instructions', 'Mix beef, bread crumbs, garlic, and salt and pepper', 'Form into meatballs and cook in a pan', 'Serve meatballs on top of spaghetti']}
-            comments = {[
-              {id: 0, comment:'This recipe is amazing!'}, 
-            ]}
-          />
+          {currentPage > 0 && (
+            <button onClick={handlePrevPage} className='prevPage'>Previous Page</button>
+          )}
+          <Recipe {...recipe1}/>
         </div>
         <div className="right">
-          <button onClick={handleNextPage}>Next Page</button>
-          <Recipe
-            title = {'Spaghetti and Meatballs'}
-            chefName = {'Giada De Laurentiis'}
-            servingSize = {4}
-            ingredients = {['1 pound spaghetti', '1 pound ground beef', '1 cup bread crumbs', '2 cloves garlic, minced']}
-            directions = {['Cook spaghetti according to package instructions', 'Mix beef, bread crumbs, garlic, and salt and pepper', 'Form into meatballs and cook in a pan', 'Serve meatballs on top of spaghetti']}
-            comments = {[
-              {id: 0, comment:'This recipe is amazing!'}, 
-            ]}
-          />
+          {currentPage < recipeList.length - 1 && (
+            <button onClick={handleNextPage}>Next Page</button>
+          )}
+          <Recipe {...recipe2}/>
         </div>
     </div>
   );
